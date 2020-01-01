@@ -7,31 +7,38 @@
       <hr>
       <div class="product-list">
         <ul>          
-             <li>
-                    <img src="/static/productImg/product1.jpg" alt="">
-                    <p class="p-price">&yen;5899.99</p>    
-                    <p>笔记本电脑</p> 
+             <li v-for="product in productList" :key="product.id">
+                    <img :src="product.productImageUrl" alt="">
+                    <p class="p-price">&yen;{{product.price}}</p>    
+                    <p>{{product.productName}}</p> 
              </li>
-             <li>
-                    <img src="/static/productImg/product1.jpg" alt="">
-                    <p class="p-price">&yen;5899.99</p>    
-                    <p>笔记本电脑</p> 
-             </li>
-             <li>
-                    <img src="/static/productImg/product1.jpg" alt="">
-                    <p class="p-price">&yen;5899.99</p>    
-                    <p>笔记本电脑</p> 
-             </li>
-             <li>
-                    <img src="/static/productImg/product1.jpg" alt="">
-                    <p class="p-price">&yen;5899.99</p>    
-                    <p>笔记本电脑</p> 
-             </li>
+             
+           
         </ul>
        </div>
     </div>
   
 </template>
+<script>
+export default {
+  data() {
+    return {
+      productList: []
+    };
+  },
+  mounted() {
+    this.getProductList();
+  },
+  methods: {
+    getProductList: function() {
+      var thisVue = this;
+      this.$http.get("https://localhost:5001/api/Product").then(function(res) {
+        thisVue.productList = res.data;
+      });
+    }
+  }
+};
+</script>
 <style scoped>
     *{
     padding: 0;

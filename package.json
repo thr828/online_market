@@ -1,8 +1,8 @@
 {
-  "name": "online_business_demo",
+  "name": "online_business_ui",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "thr828 <592040808@qq.com>",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -14,6 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
