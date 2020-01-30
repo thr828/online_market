@@ -8,9 +8,11 @@
       <div class="product-list">
         <ul>          
              <li v-for="product in productList" :key="product.id">
-                    <img :src="product.productImageUrl" alt="">
+               <router-link :to="'/ProductDetail?pid='+product.id">
+                    <img :src="product.productImageUrl" >
                     <p class="p-price">&yen;{{product.price}}</p>    
                     <p>{{product.productName}}</p> 
+               </router-link>
              </li>
              
            
@@ -32,7 +34,7 @@ export default {
   methods: {
     getProductList: function() {
       var thisVue = this;
-      this.$http.get("https://localhost:5001/api/Product").then(function(res) {
+      this.$http.get("http://localhost:5764/api/Product").then(function(res) {
         thisVue.productList = res.data;
       });
     }
