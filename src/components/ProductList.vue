@@ -34,7 +34,7 @@ export default {
   methods: {
     getProductList: function() {
       var thisVue = this;
-      this.$http.get("http://localhost:5764/api/Product").then(function(res) {
+      this.$http.get("http://localhost:5764/api/Product/get").then(function(res) {
         thisVue.productList = res.data;
       });
     }

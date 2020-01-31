@@ -2,24 +2,25 @@
   <div class="product-page">
     <div class="product-info">
       <div class="product-info-left">
-        <img src="/static/productImg/product1.jpg" alt="">
+        <img :src="product.productImageUrl" alt="">
       </div>
       <div class="product-info-right">
-        <p class="p-name">笔记本电脑</p>
-        <p class="p-price">&yen;5889.99</p>
+        <p class="p-name">{{product.productName}}</p>
+        <p class="p-price">&yen;{{product.price}}</p>
         <p class="p-number">
-          <span class="sub" @click="subNumber">-</span>
-          <input type="text" :value="count" @change="changeCount()" />
-          <span class="pls" @click="plsNumber">+</span>
+          <span class="sub" @click="subNumber()">-</span>
+          <!--<input type="text" :value="count" @change="changeCount()" />-->
+          <input type="text" v-model="count">  <!-- 使用两种方式-->
+          <span class="pls" @click="plsNumber()">+</span>
         </p>
         <p class="p-button">
-          <button>加入购物车</button>
+          <button @click="addCarts()">加入购物车</button>
         </p>
       </div>
     </div>
-    <hr>
-    <div class="product-">
-
+    <hr style="margin-bottom:20px">
+    <div class="product-detail">
+      <img src="/static/productImg/productDetail.jpg" alt="">
     </div>
 
   </div>
@@ -29,13 +30,23 @@
 export default {
   data() {
   return {
-      count:1
+      count:1,
+      product:{}
+
     };
   },
   mounted() {
     var pid = this.$route.query.pid;
+    this.getProductById(pid);
   },
   methods: {
+    getProductById(pid){
+      var thisvue=this;
+      this.$http.get("http://localhost:5764/api/Product/GetProduct?ID="+pid).then(function(res){
+        console.log(res.data);
+        thisvue.product = res.data;
+      });
+    },
     plsNumber() {
       this.count++;
     },
@@ -55,8 +66,29 @@ export default {
         event.target.value=this.count;
       }
       
+    },
+    addCarts(){
+      var thisvue=this;
+      //http://localhost:5764/api/Product/AddCart?pruductId=2&count=23
+      this.$http.get("http://localhost:5764/api/Product/AddCart?pruductId="+this.product.id+"&count="+this.count).then(function(res){
+         if(res.data>0)
+         {
+           thisvue.$router.push("/AddSuccess");
+         }
+      });
     }
   },
+  watch:{ //此处使用的是监听
+    count:function(nVal,oVal)
+    {
+      if(isNaN(nVal)||nVal<1)
+      {
+        this.count=oVal;
+      }
+
+    }
+
+  }
 };
 </script>
 
@@ -132,7 +164,7 @@ export default {
 }
 .product-page
 {
-  width: 900px;
+  width: 1200px;
   margin: 0 auto;
   
 }
