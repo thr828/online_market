@@ -42,7 +42,8 @@ export default {
   methods: {
     getProductById(pid){
       var thisvue=this;
-      this.$http.get("http://localhost:5764/api/Product/GetProduct?ID="+pid).then(function(res){
+     // this.$http.get("http://localhost:5765/api/Product/GetProduct?ID="+pid).then(function(res){
+      this.$http.get("http://localhost:5676/api/Product/"+pid).then(function(res){
         console.log(res.data);
         thisvue.product = res.data;
       });
@@ -65,12 +66,14 @@ export default {
       {
         event.target.value=this.count;
       }
-      
+
     },
     addCarts(){
       var thisvue=this;
       //http://localhost:5764/api/Product/AddCart?pruductId=2&count=23
-      this.$http.get("http://localhost:5764/api/Product/AddCart?pruductId="+this.product.id+"&count="+this.count).then(function(res){
+     // this.$http.get("http://localhost:5676/api/Product/AddCart?pruductId="+this.product.id+"&count="+this.count).then(function(res){
+      //调用restful接口
+      this.$http.get("http://localhost:5676/api/Product/"+this.product.id+","+this.count).then(function(res){
          if(res.data>0)
          {
            thisvue.$router.push("/AddSuccess");
@@ -95,7 +98,7 @@ export default {
 <style>
 .product-info-left
 {
-   float: left;  
+   float: left;
 }
 .product-info-right
 {
@@ -166,7 +169,7 @@ export default {
 {
   width: 1200px;
   margin: 0 auto;
-  
+
 }
 .product-info
 {

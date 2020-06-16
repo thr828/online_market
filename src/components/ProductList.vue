@@ -6,20 +6,20 @@
       </div>
       <hr>
       <div class="product-list">
-        <ul>          
+        <ul>
              <li v-for="product in productList" :key="product.id">
                <router-link :to="'/ProductDetail?pid='+product.id">
                     <img :src="product.productImageUrl" >
-                    <p class="p-price">&yen;{{product.price}}</p>    
-                    <p>{{product.productName}}</p> 
+                    <p class="p-price">&yen;{{product.price}}</p>
+                    <p>{{product.productName}}</p>
                </router-link>
              </li>
-             
-           
+
+
         </ul>
        </div>
     </div>
-  
+
 </template>
 <script>
 export default {
@@ -34,7 +34,7 @@ export default {
   methods: {
     getProductList: function() {
       var thisVue = this;
-      this.$http.get("http://localhost:5764/api/Product/get").then(function(res) {
+      this.$http.get("http://localhost:5676/api/Product").then(function(res) {
         thisVue.productList = res.data;
       });
     }
@@ -44,7 +44,7 @@ export default {
 <style scoped>
     *{
     padding: 0;
-    margin: 0;  
+    margin: 0;
     }
   .product-search
   {
@@ -71,7 +71,7 @@ export default {
        color: white;
        float: left;
        outline: none;
-       
+
    }
    hr{
        margin-top:60px;
@@ -102,6 +102,6 @@ export default {
        font-size: 18px;
        font-weight: bold;
        color: red;
-       margin-bottom: 6px;  
+       margin-bottom: 6px;
    }
 </style>
